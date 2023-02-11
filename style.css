@@ -1,0 +1,52 @@
+body {
+    background-color: #969694;
+}
+table,th,td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th {
+    background-color: #bebebb;
+    width: fit-content;
+    padding: 1em;
+}
+td {
+    padding: 0.8em;
+    text-align: center;
+}
+li {
+    list-style: none;
+}
+b {
+    text-decoration: underline;
+}
+.skilltable {
+    border:0;
+    border-collapse: unset;
+    text-align: center;
+}
+.skills {
+    background-color: #969694;
+    padding:0;
+    border:0;
+    border-collapse: unset;
+    vertical-align: top;
+}
+.button {
+    font: bold 1.2em "Roboto Light";
+    text-decoration: none;
+    background-color: #c00909;
+    color: black;
+    padding: 0.5em;
+    border: 1em darkred;
+    border-radius: 10px;
+}
+.button:hover {
+    font: bold 1.2em "Roboto Light";
+    text-decoration: none;
+    background-color: darkred;
+    color: black;
+    padding: 0.5em;
+    border: 1em darkred;
+    border-radius: 10px;
+}

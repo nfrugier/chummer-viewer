@@ -1,1 +1,4 @@
 .idea/
+uploads/*.xml
+composer.lock
+vendor/
