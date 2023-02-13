@@ -10,7 +10,7 @@ This webpage let you upload a chum5 file which is a xml file with a fancy name. 
 So you don't have to open Chummer5a just to look at the core stats of your character.
 When you close the viewer with the "CLOSE CHARACTER" button, you go back to the homepage, and it deletes the xml file from the server.
 
-![Screenshot](./doc/screencap.png "Screenshot")
+![Screenshot](./doc/screenshot.png "Screenshot")
 
 ## Installation
 To use it locally, you'll need a php 8.1 server running and Composer to get the Twig dependencies.
