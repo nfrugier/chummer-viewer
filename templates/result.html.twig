@@ -11,133 +11,257 @@
     {% set name = 'unnamed' %}
 {% endif %}
 
+{% set special = '' %}
+{% if character.adept == 'True' %}
+    {% set special = 'Adept' %}
+{% elseif character.magician == 'True' %}
+    {% set special = 'Magician' %}
+{% elseif character.technomancer == 'True' %}
+    {% set special = 'Technomancer' %}
+{% elseif character.ai == 'True' %}
+    {% set special = 'AI' %}
+{% endif %}
+
 {% block title %}
    {{ name }}
 {% endblock %}
 
+{% block navbar %}
+    {#<nav class="navbar bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <a >CLOSE</a>
+        </div>
+    </nav>#}
+{% endblock %}
+
 {% block content %}
-    <a href="../close.php?char={{ file }}" class="button">CLOSE CHARACTER</a>
-    <h1>{{ name }}</h1>
-    <span>Player : {{ character.playername }}</span>
-    <ul>
-        <li>Age : {{ character.age }}</li>
-        <li>Gender : {{ character.gender }}</li>
-        <li>Metatype : {{ character.metatype }} {% if character.metavariant != 'None' %} - {{ character.metavariant }}{% endif %}</li>
-        <li>Essence : {{ character.totaless }} on 6.0</li>
-        <li>Karma : {{ character.karma }}</li>
-        <li>StreetCred : {{ character.streetcred }}</li>
-        <li>Notoriety : {{ character.notoriety }}</li>
-        <li>Nuyens : {{ character.nuyen|number_format(2,'.','\'') }} &#165;</li>
-    </ul>
-    <table title="Attributes">
-        {% for attribute in character.attributes %}
-            <tr>
-                {% for element in attribute %}
-                <th>{{ element.name }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for element in attribute %}
-                    <td>{{ element.totalvalue }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-    <table class="skilltable">
-        <tr>
-            {% for key, element in character.newskills %}
-                {% if key == 'skills' and element is not empty%}
-                    <th class="skills">
-                        <table>
-                            <thead><b>Active Skills</b></thead>
-                            <tr><th>Name</th><th>Level</th></tr>
-                            {% for skills in element %}
-                                {% for skill in skills %}
-                                    {% if skill.base > 0 %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-auto sticky-top bg-dark">
+                <div class="d-flex flex-sm-column flex-row flex-nowrap align-items-center sticky-top">
+                    <a href="../src/close.php?char={{ file }}" class="btn btn-primary" title="X" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                        X
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm pl-1 min-vh-100">
+                <h1 class="text-center font-weight-bolder">{{ name|upper }}</h1>
+
+                <div class="container d-inline-flex ">
+                    <div class="card-group mb-2 w-50 ">
+                            <div class="card text-black bg-light mr-2 border border-dark" >
+                                <div class="card-header text-warning bg-primary text-center"><h5 class="font-weight-bold">INFORMATIONS</h5></div>
+                                <div class="card-body">
+                                    <table class="table table-responsive table-borderless bg-light">
+                                        {% if special != '' %}
+                                            <tr>
+                                                <td>Special</td>
+                                                <td>{{ special }}</td>
+                                            </tr>
+                                        {% endif %}
                                         <tr>
-                                            <th>{{ skill.name }}</th>
-                                            <td>{{ skill.base + skill.karma }} {% if skill.karma > 0 %} (k){% endif %}</td>
+                                            <td>Essence</td>
+                                            <td>{{ character.totaless }} on 6.0</td>
                                         </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </table>
-                    </th>
-                {% elseif key == 'knoskills' and element is not empty%}
-                    <th class="skills">
-                        <table>
-                            <thead><b>Knowledge Skills</b></thead>
-                            <tr><th>Name</th><th>Level</th><th>Spec</th></tr>
-                            {% for skills in element %}
-                                {% for skill in skills %}
-                                    {% if skill.base > 0 %}
                                         <tr>
-                                            <th>{{ skill.name }}</th>
-                                            <td>
-                                                {{ skill.base + skill.karma }}
-                                                {% if skill.karma > 0 %}
-                                                    &nbsp;(k)
+                                            <td>Karma</td>
+                                            <td>{{ character.karma}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nuyens</td>
+                                            <td>{{ character.nuyen|number_format(0,'.','\'') }} &#165;</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card text-black bg-light border border-dark">
+                                <div class="card-header text-warning bg-primary text-center"><h5 class="font-weight-bold">MUGSHOT</h5></div>
+                                <div class="card-body">
+                                    <table class="table table-responsive table-borderless bg-light">
+                                        <tr>
+                                            <td>Metatype</td>
+                                            <td>{{ character.metatype }} {% if character.metavariant != 'None' %} - {{ character.metavariant }}{% endif %}</td>
+                                        </tr>
+                                        {% if character.age is not iterable %}
+                                        <tr>
+                                            <td>Age</td>
+                                            <td>{{ character.age }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.gender is not iterable %}
+                                        <tr>
+                                            <td>Gender</td>
+                                            <td>{{ character.gender }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.eyes is not iterable %}
+                                        <tr>
+                                            <td>Eyes</td>
+                                            <td>{{ character.eyes }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.height is not iterable %}
+                                        <tr>
+                                            <td>Height</td>
+                                            <td>{{ character.height }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.weight is not iterable %}
+                                        <tr>
+                                            <td>Weight</td>
+                                            <td>{{ character.weight }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.skin is not iterable  %}
+                                        <tr>
+                                            <td>Skin</td>
+                                            <td>{{ character.skin }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.hair is not iterable %}
+                                        <tr>
+                                            <td>Hair</td>
+                                            <td>{{ character.hair }}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if character.playername is not iterable %}
+                                        <tr>
+                                            <td>Player</td>
+                                            <td>{{ character.playername }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <table class="table bg-primary table-striped table-bordered text-center table-responsive-xl" title="Attributes">
+                    {% for attribute in character.attributes %}
+                        <thead>
+                        <tr class="table text-warning font-weight-bold">
+                            {% for element in attribute %}
+                                <th scope="col">{{ element.name }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="bg-light">
+                            {% for element in attribute %}
+                                <td >{{ element.totalvalue }} / {{ element.metatypemax }}</td>
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+                <div>
+                </div>
+                <table class="table align-top table-responsive-md">
+                    <tr>
+                        {% for key, element in character.newskills %}
+                            {% if key == 'skills' and element is not empty%}
+                                <th >
+                                    <table class="table bg-primary table-striped table-bordered text-center">
+                                        <thead><b>Active Skills</b></thead>
+                                        <tr class="table text-warning font-weight-bold">
+                                            <th>NAME</th>
+                                            <th>LEVEL</th>
+                                        </tr>
+                                        <tbody>
+                                        {% for skills in element %}
+                                            {% for skill in skills %}
+                                                {% if skill.base > 0 %}
+                                                    <tr class="bg-light">
+                                                        <th class="text-left font-weight-bold">{{ skill.name }}</th>
+                                                        <td class="font-weight-normal">{{ skill.base + skill.karma }} {% if skill.karma > 0 %} (k){% endif %}</td>
+                                                    </tr>
                                                 {% endif %}
-                                            </td>
-                                            <td>
-                                                <ul>
-                                                    {% for spec in skill.specs %}
-                                                        <li>{{ spec.name }}</li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </table>
-                    </th>
-                {% elseif key == 'groups' and element is not empty%}
-                    <th class="skills">
-                        <table>
-                            <thead><b>Skill Groups</b></thead>
-                            <tr><th>Name</th><th>Level</th></tr>
-                            {% for skills in element %}
-                                {% for skill in skills %}
-                                    {% if skill.base > 0 %}
-                                        <tr>
-                                            <th>{{ skill.name }}</th>
-                                            <td>
-                                                {{ skill.base + skill.karma }}
-                                                {% if skill.karma > 0 %}
-                                                    &nbsp;(k)
+                                            {% endfor %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </th>
+                            {% elseif key == 'knoskills' and element is not empty%}
+                                <th >
+                                    <table class="table bg-primary table-striped table-bordered text-center">
+                                        <thead><b>Knowledge Skills</b></thead>
+                                        <tr class="table text-warning font-weight-bold"><th>NAME</th><th>LEVEL</th><th>SPEC</th></tr>
+                                        {% for skills in element %}
+                                            {% for skill in skills %}
+                                                {% if skill.base > 0 %}
+                                                    <tr class="bg-light">
+                                                        <th class="text-left font-weight-bold">{{ skill.name }}</th>
+                                                        <td class="font-weight-normal">
+                                                            {{ skill.base + skill.karma }}
+                                                            {% if skill.karma > 0 %}
+                                                                &nbsp;(k)
+                                                            {% endif %}
+                                                        </td>
+                                                        <td class="font-weight-normal">
+                                                            <ul class="list-unstyled">
+                                                                {% for spec in skill.specs %}
+                                                                    <li>{{ spec.name }}</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
                                                 {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </table>
-                    </th>
-                {% elseif key == 'skilljackknowledgeskills' and element is not empty %}
-                    <th class="skills">
-                        <table>
-                            <thead><b>SkillJack</b></thead>
-                            <tr><th>Name</th><th>Level</th></tr>
-                            {% for skills in element %}
-                                {% for skill in skills %}
-                                    {% if skill.base > 0 %}
-                                        <tr>
-                                            <th>{{ skill.name }}</th>
-                                            <td>
-                                                {{ skill.base + skill.karma }}
-                                                {% if skill.karma > 0 %}
-                                                    &nbsp;(k)
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </table>
+                                </th>
+                            {% elseif key == 'groups' and element is not empty%}
+                                <th >
+                                    <table class="table bg-primary table-striped table-bordered text-center">
+                                        <thead><b>Skill Groups</b></thead>
+                                        <tr class="table text-warning font-weight-bold"><th>NAME</th><th>LEVEL</th></tr>
+                                        {% for skills in element %}
+                                            {% for skill in skills %}
+                                                {% if skill.base > 0 %}
+                                                    <tr class="bg-light">
+                                                        <th class="text-left font-weight-bold">{{ skill.name }}</th>
+                                                        <td class="font-weight-normal">
+                                                            {{ skill.base + skill.karma }}
+                                                            {% if skill.karma > 0 %}
+                                                                &nbsp;(k)
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
                                                 {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </table>
-                    </th>
-                {% endif %}
-            {% endfor %}
-        </tr>
-    </table>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </table>
+                                </th>
+                            {% elseif key == 'skilljackknowledgeskills' and element is not empty %}
+                                <th>
+                                    <table>
+                                        <thead><b>SkillJack</b></thead>
+                                        <tr><th>Name</th><th>Level</th></tr>
+                                        {% for skills in element %}
+                                            {% for skill in skills %}
+                                                {% if skill.base > 0 %}
+                                                    <tr>
+                                                        <th>{{ skill.name }}</th>
+                                                        <td>
+                                                            {{ skill.base + skill.karma }}
+                                                            {% if skill.karma > 0 %}
+                                                                &nbsp;(k)
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </table>
+                                </th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

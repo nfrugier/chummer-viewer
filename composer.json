@@ -1,4 +1,15 @@
 {
+    "name": "nfrugier/chummer-viewer" ,
+    "description": "Character viewer for Shadowrun 5th edition created with Chummer5a",
+    "version": "0.1",
+    "license": "CC BY-NC-SA 4.0",
+    "authors": [
+        {
+            "name": "Nicolas Frugier",
+            "homepage": "https://github.com/nfrugier/",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "8.1",
         "twig/twig": "^3.5"

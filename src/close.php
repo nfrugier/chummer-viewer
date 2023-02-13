@@ -4,4 +4,4 @@ if (is_file($file)){
     unlink($file);
 }
 
-header('Location: index.html');
+header('Location: ../index.php');

@@ -2,14 +2,11 @@
 /**
  * TWIG
  */
-require_once ('vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
-$loader = new \Twig\Loader\FilesystemLoader('./templates');
-$twig = new \Twig\Environment($loader, [
-    'debug' => true
-]);
-$twig->addExtension(new \Twig\Extension\DebugExtension());
-$targetDir = "uploads/";
+$loader = new \Twig\Loader\FilesystemLoader('../templates');
+$twig = new \Twig\Environment($loader);
+$targetDir = "../uploads/";
 $fileName = basename(convertToXML($_FILES["fileToUpload"]["name"], 'xml'));
 $targetFile = $targetDir . $fileName;
 $uploadOk = false;

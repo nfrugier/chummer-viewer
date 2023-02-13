@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Chummer Character Viewer
+{% endblock %}
+
+{% block content %}
+    <h1 class="font-weight-bolder">Chummer Character Viewer</h1>
+
+    <form action="../src/import.php" method="post" enctype="multipart/form-data" class="form-group">
+        <div class="row">
+            <div class="col-3">
+                <div class="mb-4">
+                    <label for="fileToUpload" class="form-label">Select a chum5 file</label>
+                    <input class="form-control" type="file" name="fileToUpload" id="fileToUpload">
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary mb-2" type="submit" value="Import character" name="submit">
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
